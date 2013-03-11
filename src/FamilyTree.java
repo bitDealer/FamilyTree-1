@@ -46,8 +46,25 @@ public class FamilyTree {
 	 */
 	public void makeLinkToMother(String aPerson, String aDOB, String mName,
 			String mDOB) {
+		// Possible break here.
+		Person child = null, mum = null;
 		for(int i = 0; i < family.size(); i++) {
-			
+			System.out.println(aPerson + aDOB + mName + mDOB);
+			System.out.println(family.get(i).getName() + family.get(i).getDob());
+			if(family.get(i).getName() == aPerson && family.get(i).getDob() == aDOB) {
+				child = family.get(i);
+				System.out.println("CHILD IS GOT - " + child.getName());
+			} else if(family.get(i).getName() == mName && family.get(i).getDob() == mDOB) {
+				mum = family.get(i);
+				System.out.println("MOTHER IS GOT - " + mum.getName());
+			}
+		}
+		if(child != null && mum != null) {
+			child.setMother(mum);
+			mum.addChild(child);
+		} else {
+			System.out.println("Error 369 - Child and/or Mother doesn't exist in the tree. <DEV NOTE - " +
+					"One of them is null. Test here.");
 		}
 		// Check for each person in the tree.
 		// If in tree, add mother to aPerson's Person object.

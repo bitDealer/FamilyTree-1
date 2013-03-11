@@ -1,7 +1,6 @@
 package familytree;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Holds the details of an individual. You need to complete this class
@@ -14,7 +13,7 @@ public class Person implements Comparable<Person> {
 	private String name, dob, birthplace, dateMarried = null, dateDivorced = null;
 	private Person partner = null, mother = null, father = null;
 	private ArrayList<Person> children = new ArrayList<Person>();
-	private HashMap<Person, String[]> divorcees = new HashMap<Person, String[]>();
+	private ArrayList<Person> divorcees = new ArrayList<Person>();
 	private boolean adopted = false;
 	// private boolean alive = true;
 
@@ -56,11 +55,13 @@ public class Person implements Comparable<Person> {
 	
 	public void addDivorce(Person exPartner, String dateofDivorce) {
 		if(this.partner == exPartner) {
-			String[] divorce = new String[] {dateMarried, dateofDivorce};
-			divorcees.put(partner, divorce);
+			divorcees.add(exPartner);
 			this.partner = null;
 			this.dateMarried = null;
 			this.dateDivorced = dateofDivorce;
+		} else {
+			System.out.println("Error 418 - The partner given doesn't match with the partner linked to the person." +
+					"<DEV NOTE - Failed at addDivorce()>");
 		}
 	}
 	
@@ -132,7 +133,7 @@ public class Person implements Comparable<Person> {
 		return father;
 	}
 
-	public HashMap<Person, String[]> getDivorcees() {
+	public ArrayList<Person> getDivorcees() {
 		return divorcees;
 	}
 
@@ -142,18 +143,44 @@ public class Person implements Comparable<Person> {
 
 	@Override
 	public int compareTo(Person o) {
-		if(this.name == o.name && this.dob == o.dob && this.mother == o.mother) {
+		if(this.name == o.name && this.dob == o.dob) {
 			return 1;
 		} else {
 			return 0;
 		}
 	}
 
+	/**
+	 * This will display the data available to it, and not the things it doesn't have.
+	 * TODO: Consider adding old parents if adopted.
+	 */
 	@Override
 	public String toString() {
-		// TODO
-		String str = "Name: " + this.name + ". DoB: " + this.dob + ". Birthplace: " + this.birthplace + ".";
-		return str;
+		String strNDB = "\nName: " + this.name + ". DoB: " + this.dob + ". Birthplace: " + this.birthplace;
+		String strMFA = "", strPMD = "", strChild = "";
+		
+		// Mother, Father and Adoption states.
+		if(this.mother != null) {
+			strMFA += "\nMother: " + this.mother.getName();
+		}
+		if(this.father != null) {
+			strMFA += "\nFather: " + this.father.getName();
+		}
+		strMFA += "\nAdopted: " + this.adopted;
+		// Partner, Marriage Date and Divorce Date, along with Last Partner if divorced.
+		if(this.partner != null) {
+			strPMD += "\nPartner: " + this.partner.getName() + ". Date Married: " + this.dateMarried;
+		}
+		if(!this.divorcees.isEmpty()) {
+			strPMD += "\nPrevious Partner: " + divorcees.get(divorcees.size() - 1) + ". Date Divorced: " + this.dateDivorced;
+		}
+		// Children.
+		if(!children.isEmpty()) {
+			for(Person p : this.children) {
+				strChild += p.getName() + "";
+			}
+		}
+		return strNDB + strMFA + strPMD + strChild;
 	}
 	
 }
