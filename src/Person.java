@@ -29,16 +29,30 @@ public class Person implements Comparable<Person> {
 	}
 	
 	/*
-	 * Methods for adding children and divorces below.
+	 * Methods for adding/removing children and divorces below.
 	 */
 	
 	public void addChild(Person child) {
 		if(child != null) {
 			if(!children.contains(child)) {
 				children.add(child);
+			} else {
+				System.out.println("Error 418a - This child is already linked to the mother.");
 			}
 		} else {
-			System.out.println("Error 418 - Please do not enter children without any details.");
+			System.out.println("Error 418b - Please do not enter children without any details.");
+		}
+	}
+	
+	public void removeChild(Person child) {
+		if(child != null) {
+			if(children.contains(child)) {
+				children.remove(child);
+			} else {
+				System.out.println("Error 419a - The child entered isn't linked to this parent.");
+			}
+		} else {
+			System.out.println("Error 419b - Please do not enter children without any details.");
 		}
 	}
 	

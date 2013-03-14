@@ -577,16 +577,25 @@ public class FamilyTree {
 	public void recordAdoption(String personName, String aDOB) {
 		Person child = getPerson(personName, aDOB);
 		if (child != null) {
-			child.setAdopted(true);
-			child.setBloodlineFather(child.getFather());
-			child.setBloodlineMother(child.getMother());
-			child.setFather(null);
-			child.setMother(null);
-			System.out.println("Adoption of " + personName
+			if(!child.isAdopted()) {
+				if(child.getMother() != null) {
+					child.setBloodlineMother(child.getMother());
+					child.getMother().removeChild(child);
+					child.setMother(null);
+				}
+				if(child.getFather() != null) {
+					child.setBloodlineFather(child.getFather());
+					child.getFather().removeChild(child);
+					child.setFather(null);
+				}
+				child.setAdopted(true);
+				System.out.println("Adoption of " + personName
 					+ " recorded. Please create new Mother and Father links.");
+			} else {
+				System.out.println("Error 326 - This person is already set to being adopted!");
+			}
 		} else {
-			System.out
-					.println("Error 310 - There is no person within the tree with that name and date of birth.");
+			System.out.println("Error 327 - There is no person within the tree with that name and date of birth.");
 		}
 	}
 
