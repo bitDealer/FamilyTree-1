@@ -14,8 +14,16 @@ Within Person:
 		- Father
 	<ArrayList<Person>>
 		- Children
-	<HashMap<Person, Integer[2]>>
 		- Divorcees
 	<Boolean>
 		- Adopted
 		- Alive
+		
+With this assignment, I chose to base the family tree around an ArrayList structure, holding the custom Person
+object within it. I felt this was a good choice to make as otherwise, I was considering a Map approach with
+HashMaps. This approach actually takes up more memory per object by around 2x compared to the ArrayList.
+I realised when I started that I preferred an ArrayList as I could get the object I wanted whenever I needed it,
+as opposed to wanting a key from a Map that I might only know the value for.
+The approach that I took with this is limited in the sense that a Directed Graph would have been a more suitable
+approach to the project, but I felt like my lack of knowledge in this area would hold me back from completing the
+assignment in a suitable manner.

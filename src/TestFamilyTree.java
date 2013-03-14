@@ -61,11 +61,11 @@ public class TestFamilyTree {
 	 */
 
 	private void processInput() {
-		Scanner scan = new Scanner(System.in);
-		String selection, personName, place, dOB, fDOB, mDOB, gDOB, mothersName, fathersName, bridesName, groomsName;
+		Scanner scan = new Scanner(System.in), selectScan = new Scanner(System.in);
+		String selection, personName, place, dOB, fDOB, mDOB, gDOB, mothersName, fathersName, bridesName, groomsName, dateMD;
 		char iChoice;
 
-		selection = scan.nextLine().toUpperCase();
+		selection = selectScan.nextLine().toUpperCase();
 		iChoice = selection.charAt(0);
 		while (iChoice != 'X') {
 			switch (iChoice) {
@@ -83,7 +83,7 @@ public class TestFamilyTree {
 				personName = scan.next();
 				dOB = scan.next();
 				mothersName = scan.next();
-				mDOB = scan.nextLine();
+				mDOB = scan.next();
 				fTree1.makeLinkToMother(personName, dOB, mothersName, mDOB);
 				break;
 			case 'C':
@@ -92,26 +92,28 @@ public class TestFamilyTree {
 				personName = scan.next();
 				dOB = scan.next();
 				fathersName = scan.next();
-				fDOB = scan.nextLine();
+				fDOB = scan.next();
 				fTree1.makeLinkToFather(personName, dOB, fathersName, fDOB);
 				break;
 			case 'D':
 				System.out.println("Enter - Bride's name and DOB "
-						+ "and Groom's name and DOB : ");
-				bridesName = scan.next();
-				dOB = scan.next();
-				groomsName = scan.nextLine();
-				gDOB = scan.nextLine();
-				fTree1.recordWedding(bridesName, dOB, groomsName, gDOB);
-				break;
-			case 'E':
-				System.out.println("Enter - Wife's name and DOB "
-						+ "and Husband's name and DOB : ");
+						+ "and Groom's name and DOB, along with Date of Marriage (ddmmyyyy) : ");
 				bridesName = scan.next();
 				dOB = scan.next();
 				groomsName = scan.next();
 				gDOB = scan.next();
-				fTree1.recordDivorce(bridesName, dOB, groomsName, gDOB);
+				dateMD = scan.next();
+				fTree1.recordWedding(bridesName, dOB, groomsName, gDOB, dateMD);
+				break;
+			case 'E':
+				System.out.println("Enter - Wife's name and DOB "
+						+ "and Husband's name and DOB, along with Date of Divorce (ddmmyyyy) : ");
+				bridesName = scan.next();
+				dOB = scan.next();
+				groomsName = scan.next();
+				gDOB = scan.next();
+				dateMD = scan.next();
+				fTree1.recordDivorce(bridesName, dOB, groomsName, gDOB, dateMD);
 				break;
 			case 'F':
 				System.out.println("Enter - name and DOB of person adopted : ");
@@ -124,7 +126,7 @@ public class TestFamilyTree {
 																			// nothing
 			}
 			inputMenu();
-			selection = scan.nextLine().toUpperCase();
+			selection = selectScan.next().toUpperCase();
 			iChoice = selection.charAt(0);
 		}
 	}
@@ -135,12 +137,12 @@ public class TestFamilyTree {
 	 * @see FamilyTree
 	 */
 	private void processQuery() {
-		Scanner scan = new Scanner(System.in);
+		Scanner scan = new Scanner(System.in), selectScan = new Scanner(System.in);
 		String selection, personName;
 		char qChoice;
 		int numOfGens;
 
-		selection = scan.nextLine().toUpperCase();
+		selection = selectScan.nextLine().toUpperCase();
 		qChoice = selection.charAt(0);
 		while (qChoice != 'X') {
 			switch (qChoice) {
@@ -192,7 +194,7 @@ public class TestFamilyTree {
 				break;
 			}
 			queryMenu();
-			selection = scan.nextLine().toUpperCase();
+			selection = selectScan.nextLine().toUpperCase();
 			qChoice = selection.charAt(0);
 		}
 	}
